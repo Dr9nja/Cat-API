@@ -7,6 +7,14 @@ const container = document.querySelector(".container");
 const rects = document.querySelectorAll(".rect");
 const get_button = document.querySelector(".get_button");
 
+const list_of_words = ["Meaw","Maw","Mow","Pan","Spork","Knife","Cucumber","Fatty","Chubby","Dog","Cat","Car","Water","Apple","Pear",
+    "Milk","Fish",":3",">:3",":D",":)","Fruity"
+];
+const list_of_button_words = ["Find other car","FIND MORE CATS","Find Meow","Find Maw","Find Cattt","Find other creature","More cretures!!",
+  "Find cutie cat","Meaw find car"
+]
+
+
 
 document.addEventListener("mousemove", (e) => {
   if (!isAnimated)
@@ -29,20 +37,25 @@ document.addEventListener("mousemove", (e) => {
       `;
     });
   }
-
-  
 });
 
 get_button.addEventListener("click", async () => {
   if (isAnimated) return;
   isAnimated = true;
 
+  const randomText_Button = list_of_button_words[Math.floor(Math.random() * list_of_button_words.length)];
+  get_button.textContent = randomText_Button;
+
+  const fall_degree = Math.floor(Math.random() * 101)
+
   if (hasImage && currentImg !== null) {
     currentImg.animate(
       [
         { transform: "translate(-50%, -50%) scale(1)", opacity: 1 },
-        { transform: "translate(-50%, -50%) translateZ(-800px) scale(0.1", opacity: 0 }
+        { transform: "translate(-50%, -50%) translateZ(-800px) scale(0.01) rotate(35deg)", opacity: .05 }
       ],
+
+      
     
       {
         duration: 660,
@@ -56,7 +69,6 @@ get_button.addEventListener("click", async () => {
   }
 
   const img = document.createElement("img");
-  const list_of_words = ["Meaw","Maw","Mow","Pan","Spork","Knife","Cucumber","Fatty","Chubby","Dog","Cat","Car","Water","Apple"]
   img.crossOrigin = "anonymous";
   const randomText = list_of_words[Math.floor(Math.random() * list_of_words.length)];
   img.src = `https://cataas.com/cat/says/${encodeURIComponent(randomText)}?fontSize=65&fontColor=white&random=${Date.now()}`;
@@ -65,10 +77,10 @@ get_button.addEventListener("click", async () => {
   img.style.left = "50%";
   img.style.transform = "translate(-50%, -50%)";
   img.style.opacity = "0";
-  img.style.maxWidth = "900px";
-  img.style.maxHeight = "850px";
-  img.style.boxShadow = "0 0 80px rgba(255,255,255,0.3)";
+  img.style.maxWidth = "9999px";
+  img.style.maxHeight = "9999px";
   img.style.transition = "opacity 1.2s ease";
+  img.style.boxShadow = `0 0 0px rgba(255,255,255, 0.5)`;
 
   container.appendChild(img);
   currentImg = img;
@@ -146,9 +158,10 @@ get_button.addEventListener("click", async () => {
       let color_adds = 0;
       if (lower_opacity){
         final_opacity * 2
-        color_adds = 65
+        color_adds = 60
       };
       rect.style.border = `4px solid rgba(${r+color_adds}, ${g+color_adds}, ${b+color_adds}, ${final_opacity})`;
+      img.style.boxShadow = `0 0 80px 100px rgba(${r+color_adds}, ${g+color_adds}, ${b+color_adds}, 0.3)`;
     });
   };
 
@@ -157,16 +170,14 @@ get_button.addEventListener("click", async () => {
     get_button.animate(
       [
         { transform: "translateY(0px)" },
-        { transform: "translateY(80px)" }
+        { transform: "translateY(450px)" }
       ],
       {
-        duration: 600,
+        duration: 900,
         fill: "forwards",
         easing: "ease-out"
       }
     );
-
-    get_button.textContent = "Find other creature";
   }
 
   hasImage = true;
