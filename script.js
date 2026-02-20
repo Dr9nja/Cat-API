@@ -163,7 +163,7 @@ get_button.addEventListener("click", async () => {
       rect.style.border = `4px solid rgba(${r+color_adds}, ${g+color_adds}, ${b+color_adds}, ${final_opacity})`;
       img.style.boxShadow = `0 0 80px 100px rgba(${r+color_adds}, ${g+color_adds}, ${b+color_adds}, 0.3)`;
     });
-    rects[0].style.border = `4px solid rgba(${r+color_adds}, ${g+color_adds}, ${b+color_adds}, 0.9)`;
+    rects[0].style.border = `7px solid rgba(${r+color_adds}, ${g+color_adds}, ${b+color_adds}, 0.9)`;
   };
 
 
@@ -183,4 +183,5 @@ get_button.addEventListener("click", async () => {
 
   hasImage = true;
 });
+
 
