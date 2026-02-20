@@ -1,3 +1,4 @@
+
 let isAnimated = false;
 let hasImage = false;
 let currentImg = null;
@@ -8,25 +9,28 @@ const get_button = document.querySelector(".get_button");
 
 
 document.addEventListener("mousemove", (e) => {
-  if (isAnimated) return;
+  if (!isAnimated)
+  {
+    const { innerWidth, innerHeight } = window;
+    const x = (e.clientX - innerWidth / 2) / innerWidth;
+    const y = (e.clientY - innerHeight / 2) / innerHeight;
 
-  const { innerWidth, innerHeight } = window;
-  const x = (e.clientX - innerWidth / 2) / innerWidth;
-  const y = (e.clientY - innerHeight / 2) / innerHeight;
+    rects.forEach((rect, i) => {
+      const depth = (i + 1) * 0.13;
+      const rotationX = y * 15 * depth;
+      const rotationY = x * -15 * depth;
 
-  rects.forEach((rect, i) => {
-    const depth = (i + 1) * 0.13;
-    const rotationX = y * 15 * depth;
-    const rotationY = x * -15 * depth;
+      rect.style.transform = `
+        translate(-50%, -50%)
+        rotateX(${rotationX}deg)
+        rotateY(${rotationY}deg)
+        translateZ(${i * -80}px)
+        scale(${1 - i * 0.04})
+      `;
+    });
+  }
 
-    rect.style.transform = `
-      translate(-50%, -50%)
-      rotateX(${rotationX}deg)
-      rotateY(${rotationY}deg)
-      translateZ(${i * -80}px)
-      scale(${1 - i * 0.04})
-    `;
-  });
+  
 });
 
 get_button.addEventListener("click", async () => {
@@ -52,14 +56,17 @@ get_button.addEventListener("click", async () => {
   }
 
   const img = document.createElement("img");
+  const list_of_words = ["Meaw","Maw","Mow","Pan","Spork","Knife","Cucumber","Fatty","Chubby","Dog","Cat","Car","Water","Apple"]
   img.crossOrigin = "anonymous";
-  img.src = "https://cataas.com/cat?random=" + Date.now();
+  const randomText = list_of_words[Math.floor(Math.random() * list_of_words.length)];
+  img.src = `https://cataas.com/cat/says/${encodeURIComponent(randomText)}?fontSize=65&fontColor=white&random=${Date.now()}`;
   img.style.position = "absolute";
   img.style.top = "50%";
   img.style.left = "50%";
   img.style.transform = "translate(-50%, -50%)";
   img.style.opacity = "0";
-  img.style.maxWidth = "600px";
+  img.style.maxWidth = "900px";
+  img.style.maxHeight = "850px";
   img.style.boxShadow = "0 0 80px rgba(255,255,255,0.3)";
   img.style.transition = "opacity 1.2s ease";
 
@@ -112,15 +119,15 @@ get_button.addEventListener("click", async () => {
 
     ctx.drawImage(img, 0, 0);
 
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
+    const UpX = canvas.width / 1.5;
+    const DownY = canvas.height / 1.5;
 
-    const pixel = ctx.getImageData(centerX, centerY, 10, 10).data;
+    const pixel = ctx.getImageData(UpX, DownY, 100, 100).data;
     const r = pixel[0];
     const g = pixel[1];
     const b = pixel[2];
 
-    const color = `rgb(${r}, ${g}, ${b})`;
+    //const color = `rgb(${r}, ${g}, ${b})`;
 
     rects.forEach((rect) => {
       rect.animate(
@@ -134,8 +141,14 @@ get_button.addEventListener("click", async () => {
           fill: "forwards"
         }
       );
-
-      rect.style.border = `4px solid rgba(${r}, ${g}, ${b}, 0.411)`;
+      const lower_opacity = (r && g && b) < 125
+      let final_opacity = 0.411;
+      let color_adds = 0;
+      if (lower_opacity){
+        final_opacity * 2
+        color_adds = 65
+      };
+      rect.style.border = `4px solid rgba(${r+color_adds}, ${g+color_adds}, ${b+color_adds}, ${final_opacity})`;
     });
   };
 
