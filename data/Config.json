@@ -1,10 +1,13 @@
 {
-    "Words": {
-        "Pic":
-        [],
-
-        "Btn":
-        []
-        
-    }
+  "Words": [
+    "Meaw", "Maw", "Mow", "Pan", "Spork",
+    "Knife", "Cucumber", "Fatty", "Chubby", "Dog",
+    "Cat", "Car", "Water", "Apple", "Pear",
+    "Milk", "Fish", ":3", ">:3", ":D",
+    ":)", "Fruity"
+  ],
+  "Btn": [
+    "Find other car", "FIND MORE CATS", "Find Meow", "Find Maw", "Find Cattt",
+    "Find other creature", "More cretures!!", "Find cutie cat", "Meaw find car"
+  ]
 }
